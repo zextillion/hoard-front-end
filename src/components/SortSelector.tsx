@@ -3,26 +3,38 @@ import { BsChevronDown } from "react-icons/bs";
 import usePlatforms, { Platform } from "../hooks/usePlatforms";
 
 interface Props {
-  selectedSort: Platform | null;
-  onSelectSort: (platform: Platform) => void;
+  sortOrder: string;
+  onSelectSortOrder: (sortOrder: string) => void;
 }
 
-const SortSelector = () => {
-  const { data, error } = usePlatforms();
+const SortSelector = ({ sortOrder, onSelectSortOrder }: Props) => {
+  const sortOrders = [
+    { value: "", label: "Relevance" },
+    { value: "-added", label: "Date added" },
+    { value: "name", label: "Name" },
+    { value: "-released", label: "Release date" },
+    { value: "-metacritic", label: "Popularity" },
+    { value: "-rating", label: "Average rating" },
+  ];
 
-  if (error) {
-    return null;
-  }
+  const currentSortOrder = sortOrders.find(
+    (order) => order.value === sortOrder
+  );
 
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        {/* {selectedSort?.name || "Order by:"} */}
-        Order by:
+        Order by: {currentSortOrder?.label || "Relevance"}
       </MenuButton>
       <MenuList>
-        {data.map((sort) => (
-          <MenuItem></MenuItem>
+        {sortOrders.map((order) => (
+          <MenuItem
+            onClick={() => onSelectSortOrder(order.value)}
+            key={order.value}
+            value={order.value}
+          >
+            {order.label}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>
