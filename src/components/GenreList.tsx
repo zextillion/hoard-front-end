@@ -5,9 +5,10 @@ import GenreSkeleton from "./GenreSkeleton";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-const GenreList = ({ onSelectGenre }: Props) => {
+const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
   if (error) {
@@ -25,6 +26,7 @@ const GenreList = ({ onSelectGenre }: Props) => {
           key={genre.id}
           genre={genre}
           onSelectGenre={onSelectGenre}
+          selected={selectedGenre?.id === genre.id}
         />
       ))}
     </List>

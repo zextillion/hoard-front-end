@@ -5,9 +5,10 @@ import getCroppedImageUrl from "../services/image-url";
 interface Props {
   genre: Genre;
   onSelectGenre: (genre: Genre) => void;
+  selected: boolean;
 }
 
-const GenreListItem = ({ genre, onSelectGenre }: Props) => {
+const GenreListItem = ({ genre, onSelectGenre, selected }: Props) => {
   return (
     <ListItem key={genre.id} paddingY="5px">
       <HStack>
@@ -20,6 +21,7 @@ const GenreListItem = ({ genre, onSelectGenre }: Props) => {
           onClick={() => onSelectGenre(genre)}
           fontSize="lg"
           variant="link"
+          fontWeight={selected ? "bold" : "normal"}
         >
           {genre.name}
         </Button>
